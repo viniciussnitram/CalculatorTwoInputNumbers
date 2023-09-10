@@ -1,8 +1,16 @@
 package application;
 
+import javax.swing.*;
+
 public class Calculator {
     private double numberOne;
     private double numberTwo;
+    private JTextField numberOneInput;
+    private JTextField numberTwoInput;
+    private JComboBox operationComboBox;
+    private JButton calculateButton;
+    private JButton clearButton;
+    private JButton closeButton;
 
     public void setNumberOne(double numberOne) {
         this.numberOne = numberOne;
