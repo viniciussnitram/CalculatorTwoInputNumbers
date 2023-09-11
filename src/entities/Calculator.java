@@ -1,8 +1,10 @@
-package application;
+package entities;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Calculator extends JDialog {
     private double numberOne;
@@ -23,19 +25,25 @@ public class Calculator extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(closeButton);
 
-        closeButton.addActionListener(new ActionListener() {
+        inputNumberOne.addKeyListener(new KeyAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                onClose();
+            public void keyTyped(KeyEvent e) {
+                char character = e.getKeyChar();
+
+                if (!Character.isDigit(character)) {
+                    e.consume();
+                }
             }
         });
 
-        clearButton.addActionListener(new ActionListener() {
+        inputNumberTwo.addKeyListener(new KeyAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                inputNumberOne.setText("");
-                inputNumberTwo.setText("");
-                comboOperation.setSelectedIndex(0);
+            public void keyTyped(KeyEvent e) {
+                char character = e.getKeyChar();
+
+                if (!Character.isDigit(character)) {
+                    e.consume();
+                }
             }
         });
 
@@ -53,6 +61,24 @@ public class Calculator extends JDialog {
                     default -> JOptionPane.showMessageDialog(null, "There is no operation type selected.");
                 }
             }
+        });
+
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                inputNumberOne.setText("");
+                inputNumberTwo.setText("");
+                comboOperation.setSelectedIndex(0);
+            }
+        });
+
+        closeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onClose();
+            }
+        });
+        inputNumberOne.addKeyListener(new KeyAdapter() {
         });
     }
 
@@ -90,12 +116,5 @@ public class Calculator extends JDialog {
 
     public void onClose() {
         dispose();
-    }
-
-    public static void main(String[] args) {
-        Calculator dialog = new Calculator();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
     }
 }
